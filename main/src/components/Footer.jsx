@@ -3,7 +3,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-inner">
         <div>
-          <p className="footer-brand">University of Ghana Campus Job Market</p>
+          <p className="footer-brand">UG CareerLink</p>
           <p className="muted">
             Building structured access to campus opportunities for students and
             trusted employers.
