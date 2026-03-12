@@ -1,0 +1,63 @@
+function Signup() {
+  return (
+    <div className="auth">
+      <div className="auth-panel">
+        <p className="eyebrow">Get started</p>
+        <h1>Build your profile and access verified campus roles.</h1>
+        <p className="lead muted">
+          Students and employers get tailored experiences with structured
+          onboarding and guided profile setup.
+        </p>
+        <div className="auth-highlight">
+          <div>
+            <p className="pill">Smart matching</p>
+            <h3>Opportunities that fit your schedule</h3>
+          </div>
+          <p className="muted">
+            Tell us your interests and availability to receive relevant listings.
+          </p>
+        </div>
+      </div>
+      <div className="auth-form">
+        <div className="glass-panel">
+          <h2>Create account</h2>
+          <p className="muted">Join as a student or verified employer.</p>
+          <div className="role-picker">
+            <button type="button" className="role active">
+              Student
+            </button>
+            <button type="button" className="role">
+              Employer
+            </button>
+          </div>
+          <form className="form">
+            <label>
+              Full name
+              <input type="text" placeholder="Enter full name" />
+            </label>
+            <label>
+              University email
+              <input type="email" placeholder="name@ug.edu.gh" />
+            </label>
+            <label>
+              Password
+              <input type="password" placeholder="Create password" />
+            </label>
+            <label>
+              Confirm password
+              <input type="password" placeholder="Confirm password" />
+            </label>
+            <button className="btn primary full" type="button">
+              Create account
+            </button>
+          </form>
+          <p className="muted small">
+            Already have an account? <a href="/login">Log in</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Signup
