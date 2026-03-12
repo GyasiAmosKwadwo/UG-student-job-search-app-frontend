@@ -3,7 +3,7 @@ function Signup() {
     <div className="auth">
       <div className="auth-panel">
         <p className="eyebrow">Get started</p>
-        <h1>Build your profile and access verified campus roles.</h1>
+        <h1>Build your profile with UG CareerLink.</h1>
         <p className="lead muted">
           Students and employers get tailored experiences with structured
           onboarding and guided profile setup.
@@ -16,6 +16,13 @@ function Signup() {
           <p className="muted">
             Tell us your interests and availability to receive relevant listings.
           </p>
+        </div>
+        <div className="auth-image">
+          <img
+            src="https://images.pexels.com/photos/5538578/pexels-photo-5538578.jpeg?cs=srgb&dl=pexels-zen-chung-5538578.jpg&fm=jpg"
+            alt="Black student reading a notebook"
+            loading="lazy"
+          />
         </div>
       </div>
       <div className="auth-form">
