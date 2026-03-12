@@ -13,7 +13,7 @@ function Navbar() {
       <nav className="nav">
         <NavLink to="/" className="brand">
           <span className="brand-mark">UG</span>
-          <span className="brand-text">Campus Job Market</span>
+          <span className="brand-text">UG CareerLink</span>
         </NavLink>
         <div className="nav-links">
           {navLinks.map((link) => (

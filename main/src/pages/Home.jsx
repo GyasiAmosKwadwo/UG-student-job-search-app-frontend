@@ -3,7 +3,7 @@ function Home() {
     <div className="home">
       <section className="hero">
         <div className="hero-content">
-          <p className="eyebrow">University of Ghana • Campus Job Market</p>
+          <p className="eyebrow">UG CareerLink • Campus Opportunities</p>
           <h1>
             A trusted campus marketplace for part-time work, internships, and
             real project experience.
@@ -56,6 +56,49 @@ function Home() {
               <span>Weekly stipend</span>
             </div>
             <button className="btn primary full">Apply now</button>
+            <div className="hero-image">
+              <img
+                src="https://images.pexels.com/photos/6238012/pexels-photo-6238012.jpeg?cs=srgb&dl=pexels-gabby-k-6238012.jpg&fm=jpg"
+                alt="Black university students collaborating"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="gallery">
+        <div className="gallery-card">
+          <img
+            src="https://images.pexels.com/photos/6238198/pexels-photo-6238198.jpeg?cs=srgb&dl=pexels-gabby-k-6238198.jpg&fm=jpg"
+            alt="Black university students together"
+            loading="lazy"
+          />
+          <div>
+            <p className="pill">Campus life</p>
+            <h3>Designed around the UG student experience.</h3>
+          </div>
+        </div>
+        <div className="gallery-card">
+          <img
+            src="https://images.pexels.com/photos/5538578/pexels-photo-5538578.jpeg?cs=srgb&dl=pexels-zen-chung-5538578.jpg&fm=jpg"
+            alt="Black student reading a notebook"
+            loading="lazy"
+          />
+          <div>
+            <p className="pill">Collaboration</p>
+            <h3>Connect with mentors and campus employers.</h3>
+          </div>
+        </div>
+        <div className="gallery-card">
+          <img
+            src="https://images.pexels.com/photos/6140710/pexels-photo-6140710.jpeg?cs=srgb&dl=pexels-william-fortunato-6140710.jpg&fm=jpg"
+            alt="Black student with backpack near campus building"
+            loading="lazy"
+          />
+          <div>
+            <p className="pill">Opportunity</p>
+            <h3>Verified roles that match your schedule.</h3>
           </div>
         </div>
       </section>
