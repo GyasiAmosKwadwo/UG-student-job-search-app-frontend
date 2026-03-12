@@ -3,7 +3,7 @@ function Login() {
     <div className="auth">
       <div className="auth-panel">
         <p className="eyebrow">Welcome back</p>
-        <h1>Log in to your campus workspace.</h1>
+        <h1>Log in to UG CareerLink.</h1>
         <p className="lead muted">
           Access saved applications, track interviews, and manage verified
           postings in one secure dashboard.
@@ -16,6 +16,13 @@ function Login() {
           <p className="muted">
             Account protection with role-based access and verification checks.
           </p>
+        </div>
+        <div className="auth-image">
+          <img
+            src="https://images.pexels.com/photos/6238012/pexels-photo-6238012.jpeg?cs=srgb&dl=pexels-gabby-k-6238012.jpg&fm=jpg"
+            alt="Black university students collaborating"
+            loading="lazy"
+          />
         </div>
       </div>
       <div className="auth-form">

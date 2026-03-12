@@ -5,8 +5,8 @@ function NotFound() {
         <p className="eyebrow">404</p>
         <h1>We could not find that page.</h1>
         <p className="lead muted">
-          The page may have moved or the link is outdated. Head back to the
-          campus marketplace to continue.
+          The page may have moved or the link is outdated. Head back to
+          UG CareerLink to continue.
         </p>
         <div className="hero-actions">
           <a className="btn primary" href="/">
