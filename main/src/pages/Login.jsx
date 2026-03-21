@@ -1,4 +1,45 @@
+import { useMemo, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { setAuth } from '../utils/auth.js'
+
 function Login() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const derivedName = useMemo(() => {
+    const local = email.split('@')[0]?.trim()
+    if (!local) return 'Student'
+    const cleaned = local.replace(/[._-]+/g, ' ').trim()
+    return cleaned
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((part) => part[0].toUpperCase() + part.slice(1))
+      .join(' ')
+  }, [email])
+
+  function handleLogin() {
+    if (!email.trim()) return
+
+    setAuth({
+      loggedIn: true,
+      user: { name: derivedName || 'Student', email: email.trim().toLowerCase() },
+      createdAt: new Date().toISOString(),
+    })
+
+    if (!localStorage.getItem('ugcl_applications_v1')) {
+      localStorage.setItem('ugcl_applications_v1', JSON.stringify([]))
+    }
+    if (!localStorage.getItem('ugcl_saved_jobs_v1')) {
+      localStorage.setItem('ugcl_saved_jobs_v1', JSON.stringify([]))
+    }
+
+    navigate(from || '/dashboard', { replace: true })
+  }
+
   return (
     <div className="auth">
       <div className="auth-panel">
@@ -32,11 +73,23 @@ function Login() {
           <form className="form">
             <label>
               Email address
-              <input type="email" placeholder="name@ug.edu.gh" />
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                placeholder="name@ug.edu.gh"
+                autoComplete="email"
+              />
             </label>
             <label>
               Password
-              <input type="password" placeholder="Enter password" />
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                placeholder="Enter password"
+                autoComplete="current-password"
+              />
             </label>
             <div className="form-row">
               <label className="checkbox">
@@ -45,7 +98,12 @@ function Login() {
               </label>
               <span className="link">Forgot password?</span>
             </div>
-            <button className="btn primary full" type="button">
+            <button
+              className="btn primary full"
+              type="button"
+              onClick={handleLogin}
+              disabled={!email.trim() || !password.trim()}
+            >
               Log in
             </button>
           </form>
