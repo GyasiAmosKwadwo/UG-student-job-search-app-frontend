@@ -1,4 +1,9 @@
+import { useState } from 'react'
+
 function Signup() {
+  const [role, setRole] = useState('student')
+  const isStudent = role === 'student'
+
   return (
     <div className="auth">
       <div className="auth-panel">
@@ -30,10 +35,20 @@ function Signup() {
           <h2>Create account</h2>
           <p className="muted">Join as a student or verified employer.</p>
           <div className="role-picker">
-            <button type="button" className="role active">
+            <button
+              type="button"
+              className={`role ${isStudent ? 'active' : ''}`}
+              onClick={() => setRole('student')}
+              aria-pressed={isStudent}
+            >
               Student
             </button>
-            <button type="button" className="role">
+            <button
+              type="button"
+              className={`role ${!isStudent ? 'active' : ''}`}
+              onClick={() => setRole('employer')}
+              aria-pressed={!isStudent}
+            >
               Employer
             </button>
           </div>
@@ -43,8 +58,11 @@ function Signup() {
               <input type="text" placeholder="Enter full name" />
             </label>
             <label>
-              University email
-              <input type="email" placeholder="name@ug.edu.gh" />
+              {isStudent ? 'University email' : 'Work email'}
+              <input
+                type="email"
+                placeholder={isStudent ? 'name@ug.edu.gh' : 'name@company.com'}
+              />
             </label>
             <label>
               Password
