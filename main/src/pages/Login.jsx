@@ -1,4 +1,32 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
 function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!email || !password) return;
+
+    setError('');
+    setLoading(true);
+
+    try {
+      const role = await login(email, password);
+      // Backend successful. Navigate them
+      navigate(`/${role}/dashboard`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="auth">
       <div className="auth-panel">
@@ -29,14 +57,33 @@ function Login() {
         <div className="glass-panel">
           <h2>Log in</h2>
           <p className="muted">Use your UG credentials or verified employer email.</p>
-          <form className="form">
+          
+          {error && (
+            <div className="alert alert-danger p-2 mb-3" style={{ fontSize: '0.9rem' }}>
+              {error}
+            </div>
+          )}
+
+          <form className="form" onSubmit={handleLogin}>
             <label>
               Email address
-              <input type="email" placeholder="name@ug.edu.gh" />
+              <input 
+                type="email" 
+                placeholder="employer@ug.edu.gh or student@ug.edu.gh" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </label>
             <label>
               Password
-              <input type="password" placeholder="Enter password" />
+              <input 
+                type="password" 
+                placeholder="Enter password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </label>
             <div className="form-row">
               <label className="checkbox">
@@ -45,8 +92,8 @@ function Login() {
               </label>
               <span className="link">Forgot password?</span>
             </div>
-            <button className="btn primary full" type="button">
-              Log in
+            <button className="btn primary full" type="submit" disabled={loading}>
+              {loading ? 'Logging in...' : 'Log in'}
             </button>
           </form>
           <div className="divider">or</div>

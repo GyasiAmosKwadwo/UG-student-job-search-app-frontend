@@ -1,4 +1,55 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 function Signup() {
+  const navigate = useNavigate();
+  const [role, setRole] = useState('student');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+
+    setError('');
+    setLoading(true);
+
+    const REGISTER_URL = 'https://ug-student-job.onrender.com/api/register/';
+
+    try {
+      const response = await fetch(REGISTER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: fullName,
+          email,
+          password,
+          role
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        // Attempt to extract the first error string from the Django DRF object
+        const errorMsg = errorData ? Object.values(errorData)[0] : 'Registration failed. Try again.';
+        throw new Error(Array.isArray(errorMsg) ? errorMsg[0] : (typeof errorMsg === 'string' ? errorMsg : 'Invalid submission'));
+      }
+
+      // If successful, take them to the login screen
+      navigate('/login');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="auth">
       <div className="auth-panel">
@@ -30,32 +81,71 @@ function Signup() {
           <h2>Create account</h2>
           <p className="muted">Join as a student or verified employer.</p>
           <div className="role-picker">
-            <button type="button" className="role active">
+            <button 
+              type="button" 
+              className={`role ${role === 'student' ? 'active' : ''}`}
+              onClick={() => setRole('student')}
+            >
               Student
             </button>
-            <button type="button" className="role">
+            <button 
+              type="button" 
+              className={`role ${role === 'employer' ? 'active' : ''}`}
+              onClick={() => setRole('employer')}
+            >
               Employer
             </button>
           </div>
-          <form className="form">
+          
+          {error && (
+            <div className="alert alert-danger p-2 mb-3 mt-3" style={{ fontSize: '0.9rem' }}>
+              {error}
+            </div>
+          )}
+
+          <form className="form" onSubmit={handleSignup}>
             <label>
               Full name
-              <input type="text" placeholder="Enter full name" />
+              <input 
+                type="text" 
+                placeholder="Enter full name" 
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
             </label>
             <label>
-              University email
-              <input type="email" placeholder="name@ug.edu.gh" />
+              Email address
+              <input 
+                type="email" 
+                placeholder="name@ug.edu.gh" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </label>
             <label>
               Password
-              <input type="password" placeholder="Create password" />
+              <input 
+                type="password" 
+                placeholder="Create password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </label>
             <label>
               Confirm password
-              <input type="password" placeholder="Confirm password" />
+              <input 
+                type="password" 
+                placeholder="Confirm password" 
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
             </label>
-            <button className="btn primary full" type="button">
-              Create account
+            <button className="btn primary full" type="submit" disabled={loading}>
+              {loading ? 'Creating account...' : 'Create account'}
             </button>
           </form>
           <p className="muted small">

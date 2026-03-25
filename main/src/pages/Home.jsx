@@ -1,4 +1,16 @@
+import React, { useEffect } from 'react';
+
 function Home() {
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        // slight delay to ensure DOM is fully painted
+        setTimeout(() => element.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
+    }
+  }, []);
   return (
     <div className="home">
       <section className="hero">
