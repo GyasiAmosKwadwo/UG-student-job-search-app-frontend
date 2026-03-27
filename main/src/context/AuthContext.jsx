@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Create Context
@@ -29,36 +30,32 @@ export const AuthProvider = ({ children }) => {
     // Replace with the ACTUAL endpoint the backend dev gives you
     const LOGIN_URL = 'https://ug-student-job.onrender.com/api/login/';
 
-    try {
-      const response = await fetch(LOGIN_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+    const response = await fetch(LOGIN_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
 
-      if (!response.ok) {
-        // If they return an error message, try to grab it
-        const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.detail || errorData?.non_field_errors?.[0] || 'Invalid email or password');
-      }
-
-      const data = await response.json();
-      
-      // Expected from Django: access token, and maybe user profile data containing the role
-      const role = data.role || (email.includes('employer') ? 'employer' : 'student'); // Fallback if backend doesn't send role
-      const token = data.access || data.token; // Fallback if it's SimpleJWT or TokenAuth
-
-      setIsAuthenticated(true);
-      setUserRole(role);
-      
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('userRole', role);
-      if (token) localStorage.setItem('token', token);
-
-      return role;
-    } catch (error) {
-      throw error;
+    if (!response.ok) {
+      // If they return an error message, try to grab it
+      const errorData = await response.json().catch(() => null);
+      throw new Error(errorData?.detail || errorData?.non_field_errors?.[0] || 'Invalid email or password');
     }
+
+    const data = await response.json();
+    
+    // Expected from Django: access token, and maybe user profile data containing the role
+    const role = data.role || (email.includes('employer') ? 'employer' : 'student'); // Fallback if backend doesn't send role
+    const token = data.access || data.token; // Fallback if it's SimpleJWT or TokenAuth
+
+    setIsAuthenticated(true);
+    setUserRole(role);
+    
+    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('userRole', role);
+    if (token) localStorage.setItem('token', token);
+
+    return role;
   };
 
   const logout = () => {
